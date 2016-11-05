@@ -1,6 +1,6 @@
 #R script
 
-input <- read.csv(file="assessment_challenge.csv",head=TRUE,sep=",")
+input <- read.csv(file="email.csv",head=TRUE,sep=",")
 #checking for rows with null values
 new_DF <- input[rowSums(is.na(input)) > 0,]
 

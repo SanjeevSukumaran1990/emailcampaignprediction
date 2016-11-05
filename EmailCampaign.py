@@ -10,7 +10,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 #loading data as dataframe
-input=pd.read_csv("assessment_challenge.csv")
+input=pd.read_csv("email.csv")
 print(input)
 
 print(input.describe())
