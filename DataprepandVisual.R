@@ -11,8 +11,10 @@ input <- input[-c(59976), ]
 
 input <- unique( input)
 input2<-input
+
 #removing categorical variables for correlation matrix and checking distribution
 input2<-within(input2,rm(from_domain_hash,Domain_extension,day))
+
 #look into distribution
 summary(input2)
 hist(input2$read_rate)
@@ -32,11 +34,11 @@ hist(input2$mb_idlesub)
 hist(input2$mb_superuser)
 
 
-##remove outliers in inpu
+##remove outliers in input
 input2<-subset(input2,read_rate<0.65 & campaign_size<15000 & avg_user_avg_read_rate<0.6 & avg_domain_read_rate<0.45 & avg_user_domain_avg_read_rate<0.6 & mb_supersub<0.5 & mb_inper<0.44982 &  mb_insec<0.6 & mb_unengsec<0.55 & mb_idlesub<0.1 & mb_engsec<0.5 & mb_superuser<0.5)
 summary(input2)
 
-
+#looking into distribution of target variable
 library(reshape2)
 library(ggplot2)
 
@@ -80,20 +82,11 @@ input$ campaign_size<-NULL
 
 y<-input$read_rate
 input$read_rate<-NULL
-#scaling the data
+#Perform minmax transformation
 mmnorm <-
   function (data,minval=0,maxval=1) 
   {
-    #This is a function to apply min-max normalization to a matrix or dataframe.
-    #Min-max normalization subtracts the minimum of an attribute from each value
-    #of the attribute and then divides the difference by the range of the attribute.
-    #These new values are multiplied by the given range of the attribute
-    #and finally added to the given minimum value of the attribute.
-    #These operations transform the data into [minval,mxval].
-    #Usually minval=0 and maxval=1.
-    #Uses the scale function found in the R base package.
-    #Input: data= The matrix or dataframe to be scaled
-    
+ 
     
     #store all attributes of the original data
     d=dim(data)
@@ -137,6 +130,7 @@ input<-mmnorm(input)
 
 input["read_rate"]<-y
 
+#renaming dummy variables
 library(data.table)
 setnames(input, old = c('factor(input$day)Mon','factor(input$day)Sat','factor(input$day)Sun','factor(input$day)Thurs','factor(input$day)Tues','factor(input$day)Wed'), new = c('Mon','Sat','Sun','Thurs','Tues','Wed'))
 setnames(input,old=c('factor(input$day)Fri'),new = c('Fri'))
