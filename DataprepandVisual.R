@@ -140,24 +140,7 @@ input["read_rate"]<-y
 library(data.table)
 setnames(input, old = c('factor(input$day)Mon','factor(input$day)Sat','factor(input$day)Sun','factor(input$day)Thurs','factor(input$day)Tues','factor(input$day)Wed'), new = c('Mon','Sat','Sun','Thurs','Tues','Wed'))
 setnames(input,old=c('factor(input$day)Fri'),new = c('Fri'))
-#data divided into training and testing
-smp_size <- floor(0.70 * nrow(input))
-set.seed(123)
-train_ind <- sample(seq_len(nrow(input)), size = smp_size)
 
-train <- input[train_ind, ]
-test <- input[-train_ind, ]
-
-#changine names of colomn
-#base model
-best.guess <- mean(train$read_rate) 
-
-
-RMSE.baseline <- sqrt(mean((best.guess-test$read_rate)^2))
-RMSE.baseline
-
-MAE.baseline <- mean(abs(best.guess-test$read_rate))
-MAE.baseline
 
 
 
