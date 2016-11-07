@@ -6,7 +6,7 @@ train_ind <- sample(seq_len(nrow(input)), size = smp_size)
 train <- input[train_ind, ]
 test <- input[-train_ind, ]
 
-#changine names of colomn
+
 #base model
 best.guess <- mean(train$read_rate) 
 
@@ -16,6 +16,7 @@ RMSE.baseline
 
 MAE.baseline <- mean(abs(best.guess-test$read_rate))
 MAE.baseline
+
 #finally regression
 fit <- lm(log(read_rate+1) ~ unique_user_cnt +avg_domain_read_rate+
           avg_domain_inbox_rate+avg_user_avg_read_rate+avg_user_domain_avg_read_rate
@@ -25,7 +26,7 @@ fit <- lm(log(read_rate+1) ~ unique_user_cnt +avg_domain_read_rate+
 summary(fit)
 plot(fit)
 
-#showing problem of heteroskedasticity
+#showing problem of heteroskedasticity by the means of plotting regression
 
 fit12 <- lm(read_rate ~ unique_user_cnt +avg_domain_read_rate+
            avg_domain_inbox_rate+avg_user_avg_read_rate+avg_user_domain_avg_read_rate
