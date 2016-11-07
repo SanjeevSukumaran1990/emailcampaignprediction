@@ -1,3 +1,21 @@
+#data divided into training and testing
+smp_size <- floor(0.70 * nrow(input))
+set.seed(123)
+train_ind <- sample(seq_len(nrow(input)), size = smp_size)
+
+train <- input[train_ind, ]
+test <- input[-train_ind, ]
+
+#changine names of colomn
+#base model
+best.guess <- mean(train$read_rate) 
+
+
+RMSE.baseline <- sqrt(mean((best.guess-test$read_rate)^2))
+RMSE.baseline
+
+MAE.baseline <- mean(abs(best.guess-test$read_rate))
+MAE.baseline
 #finally regression
 fit <- lm(log(read_rate+1) ~ unique_user_cnt +avg_domain_read_rate+
           avg_domain_inbox_rate+avg_user_avg_read_rate+avg_user_domain_avg_read_rate
